@@ -1,12 +1,13 @@
-package com.baizhi.controller;
+package com.sxyh.controller;
 
-import com.baizhi.entities.User;
+import com.alibaba.dubbo.config.annotation.Reference;
+import com.sxyh.entities.User;
+import com.sxyh.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.RestTemplate;
 /**
  * @author :自定义实现Ribbon 的基本功能
  *
@@ -15,19 +16,15 @@ import org.springframework.web.client.RestTemplate;
 @RestController
 @RequestMapping(value = "/usermanager")
 public class UserController {
-    @Autowired
-    private RestTemplate restTemplate;
+
+//    @Autowired
+    @Reference
+    private IUserService iUserService;
 
     @GetMapping(value = "/queryUserById")
     public User queryUserById(@RequestParam(value = "id") Integer id){
-//        String[] urls={
-//                "http://localhost:8888/formUserManager/queryUserById?id={id}",
-//                "http://localhost:8889/formUserManager/queryUserById?id={id}"
-//        };
-//        int randomIndex = new Random().nextInt(urls.length);
-
-        String url="http://USER-SERVER/FormUserManager/queryById?id={id}";
-        return restTemplate.getForObject(url,User.class,id);
+        User user = iUserService.queryById(id);
+        return user;
     }
 
 }
