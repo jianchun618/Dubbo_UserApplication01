@@ -24,7 +24,7 @@
 
         <dependency>
             <groupId>com.sxyh.commons</groupId>
-            <artifactId>common</artifactId>
+            <artifactId>dubbo_common</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
 
